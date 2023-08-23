@@ -1,5 +1,7 @@
 const express = require('express');
 const {app, io, server} = require('./init')
+const postRoutes = require('./routes/postRoutes');
+const db = require('./utils/database')
 // const socketIO = require('socket.io');
 // const http = require('http');
 // const PORT = 3000
@@ -8,6 +10,7 @@ const {app, io, server} = require('./init')
 // let server = http.createServer(app)
 // let io = socketIO(server)
 app.use(express.json());
+app.use('/postRoute', postRoutes);
 
 
 io.on('connection', (socket) => {
@@ -18,6 +21,10 @@ io.on('connection', (socket) => {
         text:'hepppp',
         createdAt:123
       });
+
+      socket.on('add_user', (data) => {
+        console.log(data['username']);
+    })
 
 })
 
